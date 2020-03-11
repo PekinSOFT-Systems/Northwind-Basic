@@ -17,9 +17,9 @@
  * *****************************************************************************
  * *****************************************************************************
  *  Project    :   Northwind-Basic
- *  Class      :   module-info.java
+ *  Class      :   InvalidAccountingDataException.java
  *  Author     :   Sean Carrick
- *  Created    :   Mar 8, 2020 @ 12:46:17 PM
+ *  Created    :   Mar 8, 2020 @ 3:28:10 PM
  *  Modified   :   Mar 8, 2020
  *  
  *  Purpose:
@@ -32,8 +32,29 @@
  * *****************************************************************************
  */
 
-module com_pekinsoft_northwind_basic {
-    requires transitive com_pekinsoft_northwind_utils;
-    
-    exports com.pekinsoft.northwind.basic;
+package com.pekinsoft.northwind.accounting.exceptions;
+
+/**
+ *
+ * @author Sean Carrick &lt;sean at pekinsoft dot com&gt;
+ * 
+ * @version 0.1.0
+ * @since 0.1.0
+ */
+public class InvalidAccountingDataException extends Exception {
+
+    /**
+     * Creates a new instance of <code>InvalidAccountingDataException</code> without detail message.
+     */
+    public InvalidAccountingDataException() {
+    }
+
+
+    /**
+     * Constructs an instance of <code>InvalidAccountingDataException</code> with the specified detail message.
+     * @param msg the detail message.
+     */
+    public InvalidAccountingDataException(String msg) {
+        super(msg);
+    }
 }
