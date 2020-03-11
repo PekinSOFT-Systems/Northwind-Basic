@@ -19,7 +19,7 @@
  *  Project    :   Northwind-Basic
  *  Class      :   module-info.java
  *  Author     :   Sean Carrick
- *  Created    :   Mar 8, 2020 @ 12:46:17 PM
+ *  Created    :   Mar 8, 2020 @ 3:22:34 PM
  *  Modified   :   Mar 8, 2020
  *  
  *  Purpose:
@@ -32,8 +32,9 @@
  * *****************************************************************************
  */
 
-module com_pekinsoft_northwind_basic {
-    requires transitive com_pekinsoft_northwind_utils;
+module com_pekinsoft_northwind_accounting {
+    requires com_pekinsoft_northwind_basic;
     
-    exports com.pekinsoft.northwind.basic;
+    exports com.pekinsoft.northwind.accounting;
+    exports com.pekinsoft.northwind.accounting.exceptions;
 }

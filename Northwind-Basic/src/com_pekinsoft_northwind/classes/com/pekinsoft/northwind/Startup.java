@@ -34,8 +34,11 @@
 
 package com.pekinsoft.northwind;
 
+import com.pekinsoft.northwind.accounting.exceptions.InvalidAccountingDataException;
 import com.pekinsoft.northwind.basic.Application;
+import com.pekinsoft.northwind.utils.Logger;
 import com.pekinsoft.northwind.utils.enums.SysExits;
+import com.pekinsoft.northwind.utils.exceptions.InvalidLoggingLevelException;
 
 /**
  *
@@ -54,6 +57,16 @@ public class Startup {
         System.out.println("Version: " + Application.MAJOR + "." +
                 Application.MINOR + "." + Application.REVISION + " Build " +
                 Application.BUILD);
+        
+        try {
+            if (Application.DEBUGGING) {
+                Application.log.setLevel(Logger.DEBUG);
+            } else {
+                Application.log.setLevel(Logger.CONFIG);
+            }
+        } catch (InvalidLoggingLevelException ex) {
+            Application.log.error(ex, "Not handled locally.");
+        }
         
         Application.exit(SysExits.EX_OK);
     }

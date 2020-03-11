@@ -568,10 +568,11 @@ public class Logger {
         // We need to create our message with the Exception and extra data that
         //+ has been provided.
         String src = "#".repeat(80) + "\n";
-        src += "#".repeat(40 - (" ERROR ".length() / 2)) + " E R R O R ";
-        src += "#".repeat(40 - (" ERROR ".length() / 2)) + "\n";
+        src += "#".repeat(40 - (" E R R O R ".length() / 2)) + " E R R O R ";
+        src += "#".repeat(39 - (" E R R O R ".length() / 2)) + "\n";
         src += "Message: " + ex.getMessage() + "\n";
-        src += "Source: " + ex.getCause().toString() + "\n";
+        if ( ex.getCause() != null )
+            src += "Source: " + ex.getCause().toString() + "\n";
         src += extraData + "\n\nStacktrace:\n";
         
         StackTraceElement[] stack = ex.getStackTrace();
@@ -580,9 +581,9 @@ public class Logger {
             src += element.toString() + "\n";
         }
         
-        src += "#".repeat(40 - (" END OF ERROR ".length() / 2));
+        src += "#".repeat(40 - (" E N D   O F   E R R O R ".length() / 2));
         src += " E N D   O F   E R R O R ";
-        src += "#".repeat(40 - (" END OF ERROR ".length() / 2)) + "\n\n";
+        src += "#".repeat(39 - (" E N D   O F   E R R O R ".length() / 2)) + "\n\n";
         src += " ".repeat(40 - ("USER INFORMATION".length() / 2));
         src += "USER INFORMATION"+  "\n\n";
         src += extraData + "\n";
@@ -603,6 +604,7 @@ public class Logger {
         src += "JDK Module Path:\t" + System.getProperty("jdk.module.path") + "\n";
         src += "\n";
         src += "Java Library Path:\t" + System.getProperty("java.library.path") + "\n";
+        src += "\n -> " + LocalDateTime.now().toString();
         
         // We need to try to log the message, however, we will only do so if 
         //+ logging is not turned off.
@@ -766,6 +768,64 @@ public class Logger {
      */
     public int getLevel() {
         return this.level;
+    }
+    
+    /**
+     * Logs a non-critical error to the log file, typically, when it is thrown
+     * and just before the program handles it. This should only be used 
+     * for handled errors in the program. Any other errors, which are 
+     * unrecoverable, should be logged through the `critical` method, just 
+     * before the application exits.
+     * <p>
+     * The `extraData` parameter should contain information pertinent to the
+     * user within the context of your application..</p>
+     * 
+     * @param ex        The `Exception` that was thrown.
+     * @param extraData Any extra data, such as user information, that may be
+     *                  critical to hunting down the error.
+     */
+    public void handledError(Exception ex, String extraData) {
+        // We need to create our message with the Exception and extra data that
+        //+ has been provided.
+        String src = "#".repeat(80) + "\n";
+        src += "#".repeat(40 - (" E R R O R ".length() / 2)) + " E R R O R ";
+        src += "#".repeat(39 - (" E R R O R ".length() / 2)) + "\n";
+        src += "Message: " + ex.getMessage() + "\n";
+        if ( ex.getCause() != null )
+            src += "Source: " + ex.getCause().toString() + "\n";
+        src += " ".repeat(40 - ("Extra Data".length() / 2));
+        src += "EXTRA DATA"+  "\n\n";
+        src += extraData + "\n";
+        src += "\nStacktrace:\n";
+        
+        StackTraceElement[] stack = ex.getStackTrace();
+        
+        for ( StackTraceElement element : stack ) {
+            src += element.toString() + "\n";
+        }
+        
+        src += "#".repeat(40 - (" E N D   O F   E R R O R ".length() / 2));
+        src += " E N D   O F   E R R O R ";
+        src += "#".repeat(39 - (" E N D   O F   E R R O R ".length() / 2));
+        src += "\n -> " + LocalDateTime.now().toString();
+        
+        // We need to try to log the message, however, we will only do so if 
+        //+ logging is not turned off.
+        if ( this.level != OFF ) {
+            // We're good to log the message to the log file.
+            try {
+                log.write(MSG_HDR);
+                log.write(src);
+                log.write(MSG_FTR);
+                
+                // Now, flush the buffer to be sure the data was written.
+                log.flush();
+            } catch ( IOException e ) {
+                // Let the user know that the message was not written.
+                String ttl = "I/O Error: Entry Not Written";
+                MessageBox.showError(e, ttl);
+            }
+        }
     }
     
     /**
