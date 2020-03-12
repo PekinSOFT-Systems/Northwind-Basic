@@ -34,10 +34,10 @@
 
 package com.pekinsoft.northwind;
 
-import com.pekinsoft.northwind.accounting.exceptions.InvalidAccountingDataException;
 import com.pekinsoft.northwind.basic.Application;
+import com.pekinsoft.northwind.desktop.MainFrame;
+import com.pekinsoft.northwind.utils.ArgumentParser;
 import com.pekinsoft.northwind.utils.Logger;
-import com.pekinsoft.northwind.utils.enums.SysExits;
 import com.pekinsoft.northwind.utils.exceptions.InvalidLoggingLevelException;
 
 /**
@@ -58,17 +58,39 @@ public class Startup {
                 Application.MINOR + "." + Application.REVISION + " Build " +
                 Application.BUILD);
         
-        try {
-            if (Application.DEBUGGING) {
-                Application.log.setLevel(Logger.DEBUG);
-            } else {
-                Application.log.setLevel(Logger.CONFIG);
+        int loggingLevel = 0;
+        
+        // Parse out the arguments to the application.
+        if ( args.length > 0 ) {
+            // We know that we have arguments. First, let's parse them out.
+            ArgumentParser arguments = new ArgumentParser(args);
+            
+            if ( arguments.isSwitchPresent("--debug") ||
+                    arguments.isSwitchPresent("-d") ) {
+                loggingLevel = Application.log.DEBUG;
+            } else if ( arguments.isSwitchPresent("--config") ||
+                    arguments.isSwitchPresent("-c") ) {
+                loggingLevel = Application.log.CONFIG;
+            } else if ( arguments.isSwitchPresent("--info") ||
+                    arguments.isSwitchPresent("-i") ) {
+                loggingLevel = Application.log.INFO;
+            } else if ( arguments.isSwitchPresent("--warn") ||
+                    arguments.isSwitchPresent("-w") ) {
+                loggingLevel = Application.log.WARN;
+            } else if ( arguments.isSwitchPresent("--critical") ||
+                    arguments.isSwitchPresent("-x") ) {
+                loggingLevel = Application.log.CRITICAL;
             }
+        }
+        
+        try {
+            Application.log.setLevel(loggingLevel);
         } catch (InvalidLoggingLevelException ex) {
             Application.log.error(ex, "Not handled locally.");
         }
         
-        Application.exit(SysExits.EX_OK);
+        Application.log.config("Showing the MainFrame window.");
+        MainFrame.main(args);
     }
 
     public static void exit() {

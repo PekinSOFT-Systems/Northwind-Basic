@@ -228,7 +228,33 @@ public class Math {
         return ret;
     }
     
-    
+    /**
+     * The basic accounting equation, this function tells whether or not the 
+     * balance sheet will actually balance.
+     * <p>
+     * This function tells how healthy your business is at a glance. Let's look
+     * at an example to see how this works:</p>
+     * <p>
+     * Company A has assets (bank account(s), computers, trucks, trailers, etc.)
+     * that have a total value of $15,000.00. Furthermore, Company A has total
+     * liabilities (credit cards, lines of credit, accounts payable, etc.) that
+     * total to $5,000.00. Given these two numbers, the equity of the company 
+     * (the total of all of your combined contributions and profits made) is
+     * $10,000.00. When this function is called in this situation, it will 
+     * return the value {@code true} because everything balances out and the 
+     * company is healthy. If, in order to balance the company's books, you are
+     * required to continually contribute money to the company from your own
+     * bank account, then your company would not be considered healthy.</p>
+     * <p>
+     * Most equity should be from profits and not from owner contributions.</p>
+     * 
+     * @param assets        bank balance, vehicles, equipment, etc.
+     * @param liabilities   what is owed: credit cards, loans, etc.
+     * @param equity        what the company owns outright: profit, contributions.
+     * @return              {@code true} if balanced; {@code false} otherwise.
+     * @throws InvalidAccountingDataException In the event any data point is
+     *                      zero (0) or less than zero.
+     */
     public static boolean isBalanced(double assets, double liabilities, 
             double equity) throws InvalidAccountingDataException {
         double[] params = {assets, liabilities, equity};

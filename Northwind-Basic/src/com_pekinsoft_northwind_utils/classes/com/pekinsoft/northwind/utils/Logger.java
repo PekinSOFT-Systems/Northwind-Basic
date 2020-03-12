@@ -247,7 +247,7 @@ public class Logger {
     public void config(String msg) {
         // We need to try to log the message, however, we will only do so if 
         //+ logging is not turned off and level is set to config or higher.
-        if ( this.level != OFF && this.level >= CONFIG ) {
+        if ( this.level != OFF && this.level >= CONFIG || this.level == DEBUG) {
             // We're good to log the message to the log file.
             try {
                 log.write(StringUtils.wrapAt("CONFIG: " + msg, 80) + "\n");
@@ -398,11 +398,11 @@ public class Logger {
                 src = new StringBuilder();
                 src.append(MSG_HDR);
                 src.append("See error log: ");
-                src.append(ERR_PATH);
+                src.append(StringUtils.wrapAt(ERR_PATH, 80));
                 src.append(cls);
                 src.append("_");
                 src.append(timeStamp);
-                src.append(".err");
+                src.append(".err\n\n");
                 
                 log.write(src.toString());
                 
@@ -426,11 +426,11 @@ public class Logger {
         // We need to try to log the message, however, we will only do so if 
         //+ logging is not turned off and the level is set to debugging or
         //+ higher.
-        if ( this.level != OFF && this.level >= DEBUG ) {
+        if ( this.level != OFF && this.level != DEBUG ) { // && this.level >= DEBUG ) {
             // We're good to log the message to the log file.
             try {
                 log.write(StringUtils.wrapAt("DEBUG: " + msg, 80) + "\n");
-                
+
                 // Now, flush the buffer to be sure the data was written.
                 log.flush();
             } catch ( IOException ex ) {
@@ -839,7 +839,7 @@ public class Logger {
     public void info(String msg) {
         // We need to try to log the message, however, we will only do so if 
         //+ logging is not turned off and the level is set to info or higher.
-        if ( this.level != OFF && this.level >= INFO ) {
+        if ( this.level != OFF && this.level >= INFO || this.level == DEBUG ) {
             // We're good to log the message to the log file.
             try {
                 log.write(StringUtils.wrapAt("INFO: " + msg, 80) + "\n");
@@ -889,7 +889,7 @@ public class Logger {
     public void warning(String msg) {
         // We need to try to log the message, however, we will only do so if 
         //+ logging is not turned off and the level is set to warning or higher.
-        if ( this.level != OFF && this.level >= WARN ) {
+        if ( this.level != OFF && this.level >= WARN || this.level == DEBUG ) {
             // We're good to log the message to the log file.
             try {
                 log.write(StringUtils.wrapAt("WARNING: " + msg, 80) + "\n");

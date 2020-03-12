@@ -7,5 +7,6 @@
 module com_pekinsoft_northwind {
     requires com_pekinsoft_northwind_accounting;
     requires com_pekinsoft_northwind_basic;
+    requires com_pekinsoft_northwind_desktop;
     requires com_pekinsoft_northwind_utils;
 }
