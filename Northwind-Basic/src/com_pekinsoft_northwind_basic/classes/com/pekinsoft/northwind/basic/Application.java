@@ -52,7 +52,7 @@ import java.util.Properties;
 public class Application {
     //<editor-fold defaultstate="collapsed" desc="Public Static Constants">
     public static final Logger log;
-    public static final boolean DEBUGGING;
+    public static final boolean DEBUGGING = true;
     
     public static final int MAJOR;
     public static final int MINOR;
@@ -76,7 +76,7 @@ public class Application {
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Private Member Fields">
-    private static Properties props = new Properties();
+    private static final Properties props = new Properties();
     //</editor-fold>
 
     static {
@@ -141,7 +141,7 @@ public class Application {
             companyDir.mkdirs();
             // Folder structure created \\
         }
-        DEBUGGING = Boolean.parseBoolean(props.getProperty("debugging", "false"));
+//        DEBUGGING = Boolean.parseBoolean(props.getProperty("debugging", "false"));
         long bui = Long.valueOf(props.getProperty("app.build", "0"));
         int rev = Integer.valueOf(props.getProperty("app.revision", "0"));
         int min = Integer.valueOf(props.getProperty("app.minor", "1"));
@@ -149,32 +149,32 @@ public class Application {
         
         log.debug("Calculating the version of the application.");
         if ( Boolean.getBoolean(props.getProperty("debugging")) ) {
-            if ( bui == 0 ) {
-                bui = 1583;
-            } else {
-                System.out.println("Current System Time in Milliseconds: " +
-                        System.currentTimeMillis());
-                bui += 1;
-            }
+//            if ( bui == 0 ) {
+//                bui = 1583;
+//            } else {
+//                System.out.println("Current System Time in Milliseconds: " +
+//                        System.currentTimeMillis());
+                bui++;
+//            }
 
             if ( bui > 9999 ) {
                 bui = 0;
-                rev = Integer.valueOf(props.getProperty("app.revision", "0")) + 1;
+                rev++;
             }
             if ( rev > 100 ) {
                 rev = 0;
-                min = Integer.valueOf(props.getProperty("app.minor", "1")) + 1;
+                min++;
             }
             if ( min > 10 ) {
                 min = 0;
-                maj = Integer.valueOf(props.getProperty("app.major", "0")) + 1;
+                maj++;
             }
         }
         
-        MAJOR = maj;
-        MINOR = min;
-        REVISION = rev;
-        BUILD = bui;
+        MAJOR = maj; props.setProperty("app.major", String.valueOf(MAJOR));
+        MINOR = min; props.setProperty("app.minor", String.valueOf(MINOR));
+        REVISION = rev; props.setProperty("app.revision", String.valueOf(REVISION));
+        BUILD = bui; props.setProperty("app.build", String.valueOf(BUILD));
         log.debug("---> Application version set at: " + MAJOR + "." + MINOR +
                 "." + REVISION + " Build " + BUILD);
         
