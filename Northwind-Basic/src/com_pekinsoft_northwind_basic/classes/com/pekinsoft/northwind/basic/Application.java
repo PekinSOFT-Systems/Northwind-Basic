@@ -52,7 +52,7 @@ import java.util.Properties;
 public class Application {
     //<editor-fold defaultstate="collapsed" desc="Public Static Constants">
     public static final Logger log;
-    public static final boolean DEBUGGING = true;
+    public static final boolean DEBUGGING;
     
     public static final int MAJOR;
     public static final int MINOR;
@@ -141,14 +141,14 @@ public class Application {
             companyDir.mkdirs();
             // Folder structure created \\
         }
-//        DEBUGGING = Boolean.parseBoolean(props.getProperty("debugging", "false"));
+        DEBUGGING = Boolean.parseBoolean(props.getProperty("debugging", "false"));
         long bui = Long.valueOf(props.getProperty("app.build", "0"));
         int rev = Integer.valueOf(props.getProperty("app.revision", "0"));
         int min = Integer.valueOf(props.getProperty("app.minor", "1"));
         int maj = Integer.valueOf(props.getProperty("app.major", "0"));
         
         log.debug("Calculating the version of the application.");
-        if ( Boolean.getBoolean(props.getProperty("debugging")) ) {
+        if ( DEBUGGING == true ) { //Boolean.getBoolean(props.getProperty("debugging")) ) {
 //            if ( bui == 0 ) {
 //                bui = 1583;
 //            } else {
