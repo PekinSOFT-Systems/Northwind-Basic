@@ -148,12 +148,12 @@ public class Application {
         int maj = Integer.valueOf(props.getProperty("app.major", "0"));
         
         log.debug("Calculating the version of the application.");
-        if ( DEBUGGING == true ) { //Boolean.getBoolean(props.getProperty("debugging")) ) {
-//            if ( bui == 0 ) {
-//                bui = 1583;
-//            } else {
-//                System.out.println("Current System Time in Milliseconds: " +
-//                        System.currentTimeMillis());
+        if ( DEBUGGING == true ) { 
+            if ( bui == 0 ) {
+                bui = 1583;
+            } else {
+                System.out.println("Current System Time in Milliseconds: " +
+                        System.currentTimeMillis());
                 bui++;
 //            }
 
