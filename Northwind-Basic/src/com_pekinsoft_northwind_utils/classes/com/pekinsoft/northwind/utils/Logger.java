@@ -426,7 +426,7 @@ public class Logger {
         // We need to try to log the message, however, we will only do so if 
         //+ logging is not turned off and the level is set to debugging or
         //+ higher.
-        if ( this.level != OFF && this.level != DEBUG ) { // && this.level >= DEBUG ) {
+        if ( this.level != OFF && this.level >= DEBUG ) {
             // We're good to log the message to the log file.
             try {
                 log.write(StringUtils.wrapAt("DEBUG: " + msg, 80) + "\n");
