@@ -34,10 +34,11 @@
 
 package com.pekinsoft.northwind;
 
+import com.pekinsoft.northwind.accounting.exceptions.InvalidAccountingDataException;
+import com.pekinsoft.northwind.accounting.Math;
 import com.pekinsoft.northwind.basic.Application;
 import com.pekinsoft.northwind.desktop.MainFrame;
 import com.pekinsoft.northwind.utils.ArgumentParser;
-import com.pekinsoft.northwind.utils.Logger;
 import com.pekinsoft.northwind.utils.exceptions.InvalidLoggingLevelException;
 
 /**
@@ -87,6 +88,18 @@ public class Startup {
             Application.log.setLevel(loggingLevel);
         } catch (InvalidLoggingLevelException ex) {
             Application.log.error(ex, "Not handled locally.");
+        }
+        
+        try {
+            // Perform calculations using the functions in the Math class.
+            double temp = Math.CurrentRatio(8000.00, 2000.00);
+            temp = Math.DuPontROI(260.0, 15000.0);
+            temp = Math.NetIncome(173155.55, 126782.03);
+            temp = Math.PerMileBreakdown(173155.55, 110084);
+            temp = Math.ReturnOnInvestment(0.07, 8500.0);
+            boolean tmp = Math.isBalanced(23000.0, 15000.0, 8000.0);
+        } catch (InvalidAccountingDataException ex) {
+            Application.log.handledError(ex, "Caught the error...");
         }
         
         Application.log.config("Showing the MainFrame window.");

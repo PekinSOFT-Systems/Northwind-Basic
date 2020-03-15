@@ -29,6 +29,9 @@
  *  WHEN          BY                  REASON
  *  ------------  ------------------- ------------------------------------------
  *  Mar 11, 2020  Sean Carrick        Initial creation.
+ *  Mar 14, 2020  Sean Carrick        Added the New menu, under the File menu,
+ *                                    as well as the Customer Entry menu item,
+ *                                    under the New menu.
  * *****************************************************************************
  */
 package com.pekinsoft.northwind.desktop;
@@ -62,6 +65,8 @@ public class MainFrame extends javax.swing.JFrame {
                         .getResource(
                                 "/com/pekinsoft/northwind/desktop/graphics/x16/"
                                         + "Northwind.png")));
+        this.setTitle(Application.TITLE + " " + Application.EDITION 
+                + " (Build " + Application.BUILD + ")");
         
         Application.log.exit(MainFrame.class.getCanonicalName(), "Constructor");
     }
@@ -98,8 +103,10 @@ public class MainFrame extends javax.swing.JFrame {
         MainDesktop = new javax.swing.JDesktopPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
+        NewMenu = new javax.swing.JMenu();
+        NewCustomerMenuItem = new javax.swing.JMenuItem();
+        jSeparator7 = new javax.swing.JPopupMenu.Separator();
         ExitMenuItem = new javax.swing.JMenuItem();
-        jMenu2 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Application Frame");
@@ -185,6 +192,22 @@ public class MainFrame extends javax.swing.JFrame {
 
         FileMenu.setText("File");
 
+        NewMenu.setText("New");
+
+        NewCustomerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
+        NewCustomerMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pekinsoft/northwind/desktop/graphics/x16/users.png"))); // NOI18N
+        NewCustomerMenuItem.setMnemonic('C');
+        NewCustomerMenuItem.setText("Customer...");
+        NewCustomerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewCustomerMenuItem_Clicked(evt);
+            }
+        });
+        NewMenu.add(NewCustomerMenuItem);
+
+        FileMenu.add(NewMenu);
+        FileMenu.add(jSeparator7);
+
         ExitMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F4, java.awt.event.InputEvent.ALT_MASK));
         ExitMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pekinsoft/northwind/desktop/graphics/x16/exit.png"))); // NOI18N
         ExitMenuItem.setMnemonic('x');
@@ -205,9 +228,6 @@ public class MainFrame extends javax.swing.JFrame {
         FileMenu.add(ExitMenuItem);
 
         jMenuBar1.add(FileMenu);
-
-        jMenu2.setText("Edit");
-        jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
 
@@ -230,9 +250,14 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ExitMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ExitMenuItemActionPerformed
-        // Exit the application.
+        Application.log.enter(MainFrame.class.getName(), "ExitMenuItemAction"
+                + "Performed", evt);
+        Application.log.debug("Setting the MainFrame to no longer being "
+                + "visible...");
         this.setVisible(false);
-        Application.log.critical(new Exception(), "com.pekinsoft.northwind.desktop", "MainFrame", "ExitMenuItemActionPerformed");
+        Application.log.debug("Calling the Application.exit() method...");
+        Application.log.exit(MainFrame.class.getName(), "ExitMenuItemAction"
+                + "Performed");
         Application.exit(SysExits.EX_OK);
     }//GEN-LAST:event_ExitMenuItemActionPerformed
 
@@ -245,6 +270,21 @@ public class MainFrame extends javax.swing.JFrame {
     private void ExitMenuItemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitMenuItemMouseExited
         StatusLabel.setText("<html>Watch here for helpful tips...");
     }//GEN-LAST:event_ExitMenuItemMouseExited
+
+    private void NewCustomerMenuItem_Clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewCustomerMenuItem_Clicked
+        Application.log.enter(MainFrame.class.getName(), "NewCustomerMenuItem"
+                + "_Clicked", evt);
+        Application.log.debug("Creating an instance of the CustomerEntryDialog...");
+        CustomerEntryDialog dlg = new CustomerEntryDialog();
+        Application.log.debug("Adding the new CustomerEntryDialog to the "
+                + "MainDesktop for display...");
+        this.MainDesktop.add(dlg);
+        Application.log.debug("Packing and showing the CustomerEntryDialog...");
+        dlg.pack();
+        dlg.setVisible(true);
+        Application.log.exit(MainFrame.class.getName(), "NewCustomerMenuItem"
+                + "_Clicked");
+    }//GEN-LAST:event_NewCustomerMenuItem_Clicked
 
     /**
      * @param args the command line arguments
@@ -293,6 +333,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel ExpensesPerMilePrompt;
     private javax.swing.JMenu FileMenu;
     private javax.swing.JDesktopPane MainDesktop;
+    private javax.swing.JMenuItem NewCustomerMenuItem;
+    private javax.swing.JMenu NewMenu;
     private javax.swing.JLabel ProfitPerMileLabel;
     private javax.swing.JLabel RevenuePerMileLabel;
     private javax.swing.JLabel RevenuePerMilePrompt;
@@ -305,7 +347,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel TotalRevenueLabel;
     private javax.swing.JLabel TotalRevenuePrompt;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
@@ -313,5 +354,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
+    private javax.swing.JPopupMenu.Separator jSeparator7;
     // End of variables declaration//GEN-END:variables
 }

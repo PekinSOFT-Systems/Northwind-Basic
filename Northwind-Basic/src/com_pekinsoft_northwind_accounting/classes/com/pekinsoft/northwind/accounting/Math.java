@@ -116,30 +116,32 @@ public class Math {
                 params);
         Application.log.debug("Verifying that data is present...");
         InvalidAccountingDataException ex = null;
-        if ( currentAssets == 0.0 ) {
-            ex = new InvalidAccountingDataException("No value for current "
-                    + "assets was provided.");
-            Application.log.handledError(ex, "Values provided:\n\tdouble "
-                    + "currentAssets = " + currentAssets + "\n\tdouble "
-                    + "currentLiabilities = " + currentLiabilities);
+        if ( currentAssets <= 0.0 ) {
+            ex = new InvalidAccountingDataException("Invalid 'currentAssets' "
+                    + "value supplied.");
+            Application.log.handledError(ex, "Invalid 'currentAssets' value "
+                    + "supplied.\n\n'currentAssets must be greater than, or in "
+                    + "rare cases, equal to zero (0), but the value supplied "
+                    + "for 'currentAssets' was " + currentAssets + "\n\n");
             throw ex;
         }
-        if ( currentLiabilities == 0.0 ) {
-            ex = new InvalidAccountingDataException("No valud for current "
-                    + "liabilities was provided.");
+        if ( currentLiabilities <= 0.0 ) {
+            ex = new InvalidAccountingDataException("Invalid 'currentLiabili"
+                    + "ties' value supplied.");
             
-            Application.log.handledError(ex, "Values provided:\n\tdouble "
-                    + "currentAssets = " + currentAssets + "\n\tdouble "
-                    + "currentLiabilities = " + currentLiabilities);
+            Application.log.handledError(ex, "Invalid 'currentLiabilities "
+                    + "value supplied.\n\n'currentLiabilities must be greater "
+                    + "than, or in rare cases equal to, zero (0), but the "
+                    + "value supplied was " + currentLiabilities + "\n\n");
             throw ex;
         }
         
+        double currentRatio = currentAssets / currentLiabilities;
         Application.log.debug("Returning a current ratio of: " + 
-                currentAssets / currentLiabilities + " = " + currentAssets +
-                " / " + currentLiabilities);
+                "currentAssets / currentLiabilities = " + currentRatio);
         Application.log.exit(Math.class.getCanonicalName(), "CurrentRatio", 
-                currentAssets / currentLiabilities);
-        return currentAssets / currentLiabilities;
+                currentRatio);
+        return currentRatio;
         
     }
     
@@ -156,12 +158,32 @@ public class Math {
      */
     public static double ReturnOnInvestment(double profit, double cost) 
             throws InvalidAccountingDataException {
+        double[] params = {profit, cost};
+        Application.log.enter(Math.class.getName(), "ReturnOnInvestment", params);
+        InvalidAccountingDataException ex = null;
+        Application.log.debug("Verifying that data has been provided...");
         // Verify that data has been provided.
-        if ( profit == 0.0 ) 
-            throw new InvalidAccountingDataException("No profit provided.");
-        if ( cost == 0.0 ) 
-            throw new InvalidAccountingDataException("No cost provided.");
+        if ( profit <= 0.0 ) {
+            ex = new InvalidAccountingDataException("Invalid 'profit' value "
+                    + "supplied.");
+            Application.log.error(ex, "Invalid 'profit' value "
+                    + "supplied.\n\n'profit' must be greater than zero (0), "
+                    + "but the value supplied was " + profit + "\n\n");
+            throw ex;
+        } 
+        if ( cost <= 0.0 ) {
+            ex = new InvalidAccountingDataException("Invalid 'cost' value "
+                    + "supplied.");
+            Application.log.error(ex, "Invalid 'cost' value "
+                    + "supplied.\n\n'cost' must be greater than zero (0), "
+                    + "but the value supplied was " + cost + "\n\n");
+            throw ex;
+        }
         
+        double roi = profit / cost;
+        Application.log.debug("Returning an ROI of: currentAssets / current"
+                + "Liabilities = " + roi);
+        Application.log.exit(Math.class.getName(), "ReturnOnInvestment", roi);
         return profit / cost;
     }
     
@@ -177,11 +199,32 @@ public class Math {
      */
     public static double DuPontROI(double profit, double asset) 
             throws InvalidAccountingDataException {
+        double[] params = {profit, asset};
+        Application.log.enter(Math.class.getName(), "DuPontROI", params);
+        InvalidAccountingDataException ex = null;
+        Application.log.debug("Verifying that data has been provided...");
         // Verify that data has been provided.
-        if ( profit == 0.0 )
-            throw new InvalidAccountingDataException("No profit provided.");
-        if ( asset == 0.0 )
-            throw new InvalidAccountingDataException("No asset provided.");
+        if ( profit <= 0.0 ){
+            ex = new InvalidAccountingDataException("Invalid 'profit' value "
+                    + "supplied.");
+            Application.log.error(ex, "Invalid 'profit' value supplied.\n\n"
+                    + "'profit' must be greater than zero (0), but the value "
+                    + "supplied was " + profit + "\n\n");
+            throw ex;
+        }
+        if ( asset <= 0.0 ){
+            ex = new InvalidAccountingDataException("Invalid 'asset' value "
+                    + "supplied.");
+            Application.log.error(ex, "Invalid 'asset' value supplied.\n\n"
+                    + "'asset' must be greater than zero(0), but the value "
+                    + "supplied was " + asset + "\n\n");
+            throw ex;
+        }
+        
+        double roi = profit * asset;
+        Application.log.debug("Returning a DuPont ROI of: profit * asset = "
+                    + roi);
+        Application.log.exit(Math.class.getName(), "DuPontROI", roi);
         return profit * asset;
     }
     
@@ -211,18 +254,26 @@ public class Math {
         Application.log.debug("Verifying that data was provided...");
         if ( totalRevenue <= 0.0 ) {
             ex = new InvalidAccountingDataException("No 'totalRevenue' value "
-                    + "supplied.\n\tdouble totalRevenue = " + totalRevenue);
-            Application.log.error(ex, "Invalid Accounting Data Supplied.");
+                    + "supplied.");
+            Application.log.error(ex, "No 'totalRevenue' value supplied.\n\n"
+                    + "'totalRevenue' must be greater than, or in rare cases "
+                    + "equal to, zero (0), but the supplied value was " 
+                    + totalRevenue + "\n\n");
             throw ex;
         }
         if ( totalExpenses <= 0.0 ) {
             ex = new InvalidAccountingDataException("No 'totalExpenses' value "
-                    + "supplied.\n\tdouble totalExpenses = " + totalExpenses);
-            Application.log.error(ex, "Invalid Accounting Data Supplied.");
+                    + "supplied.");
+            Application.log.error(ex, "No 'totalExpenses' value supplied.\n\n"
+                    + "'totalExpenses' must be greater than, or in rare cases "
+                    + "equal to, zero (0), but the supplied value was "
+                    + totalExpenses + "\n\n");
             throw ex;
         }
         
         double ret = totalRevenue - totalExpenses;
+        Application.log.debug("Returning a Net Income of: totalRevenue - "
+                + "totalExpenses = " + ret);
         Application.log.exit(Math.class.getCanonicalName(), "NetIncome", params, 
                 ret);
         return ret;
@@ -264,27 +315,101 @@ public class Math {
         Application.log.debug("Verifying that data was provided...");
         if ( assets <= 0.0 ) {
             ex = new InvalidAccountingDataException("No 'assets' value "
-                    + "supplied.\n\tdouble assets = " + assets);
-            Application.log.error(ex, "Invalid Assets Value Supplied.");
+                    + "supplied.");
+            Application.log.error(ex, "No 'assets' value supplied.\n\n"
+                    + "'assets' must be greater than, or in rare cases equal "
+                    + "to, zero (0), but the supplied value was " + assets);
             throw ex;
         }
         if ( liabilities <= 0.0 ) {
             ex = new InvalidAccountingDataException("No 'liabilities' value "
-                    + "supplied.\n\tdouble liabilities = " + liabilities);
-            Application.log.error(ex, "Invalid Liabilities Value Supplied.");
+                    + "supplied.");
+            Application.log.error(ex, "No 'liabilities' value supplied.\n\n"
+                    + "'liabilities' must be greater than, or in rare cases "
+                    + "equal to, zero (0), but the supplied value was "
+                    + liabilities);
             throw ex;
         }
         if ( equity <= 0.0 ) {
             ex = new InvalidAccountingDataException("No 'equity' value "
-                    + "supplied.\n\tdouble equity = " + equity);
-            Application.log.error(ex, "Invalid Equity Value Supplied.");
+                    + "supplied.");
+            Application.log.error(ex, "No 'equity' value supplied.\n\n"
+                    + "'equity' must be greater than, or in very rare cases "
+                    + "equal to, zero (0), but the supplied value was "
+                    + equity);
             throw ex;
         }
         
         boolean ret = assets == (liabilities + equity);
+        if ( ret )
+            Application.log.debug("Accounts are balanced.");
+        else
+            Application.log.debug("Accounts do not balance! Check for missing "
+                    + "or incorrect value entries in the General Ledger.");
         Application.log.exit(Math.class.getCanonicalName(), "isBalanced", 
                 params, ret);
         return ret;
+    }
+    
+    /**
+     * This function performs the calculation to provide the &quot;per mile
+     * breakdown&quot; of the value provided, based upon the miles supplied.
+     * <p>
+     * For example, if the <em>gross revenue per mile</em> is desired, then the
+     * <em><strong>total gross revenue</strong></em> for the company and the
+     * <strong>total number of miles</strong> need to be supplied. Let's say 
+     * that the company's gross revenue is $173,155.55 and the total miles
+     * driven are 110,084. In this case, the calculation would be:</p>
+     * <p><center>173,155.55 / 110,084</center></p>
+     * <p>
+     * Therefore, the return value from this function would be 1.57294020929472.
+     * </p><p>
+     * This function may be used to calculate <em>revenue</em> per mile, 
+     * <em>expense</em> per mile, or the <em>cost per mile</em> of any specific
+     * item, such as fuel, maintenance, insurance, truck/trailer payment, etc.
+     * </p>
+     * <dl>
+     *  <dt>NOTE:</dt>
+     *  <dd>This function <em><strong>may</strong></em> return a negative number,
+     *      as it is possible for a truck to haul freight at a loss. Therefore,
+     *      if you need to do any special formatting for positive, negative or
+     *      break-even (0) values, make sure to check the return value for 
+     *      positivity, negativity or zero-sum value.</dd>
+     * </dl>
+     * @param value The value to break down to the <em>per mile</em> equivalent.
+     * @param miles The number of miles corresponding to the period for calculation.
+     * @return      The <em>cost</em>, or <em>revenue</em> per mile for the
+     *              value and miles provided.
+     * @throws InvalidAccountingDataException   In the event that either 'value'
+     *              or 'miles' is zero (0) or a negative number.
+     */
+    public static double PerMileBreakdown(double value, long miles)
+            throws InvalidAccountingDataException {
+        Application.log.enter(Math.class.getName(), "PerMileBreakdown");
+        InvalidAccountingDataException ex = null;
+        Application.log.debug("Verifying that data was provided...");
+        if ( value <= 0.0 ) {
+            ex = new InvalidAccountingDataException("Invalid 'value' amount "
+                    + "supplied.\n\tdouble value = " + value);
+            Application.log.error(ex, "Invalid Value Amount Supplied.\n\n"
+                    + "Value must be greater than zero (0) to perform the "
+                    + "requested calculation, but " + value + " was provided.\n\n");
+            throw ex;
+        }
+        if ( miles <= 0 ) {
+            ex = new InvalidAccountingDataException("Invalid 'miles' amount "
+                    + "supplied.\n\tlong miles = " + miles);
+            Application.log.error(ex, "Invalid Miles Amount Supplied.\n\n"
+                    + "Miles must be greater than zero (0) to perform the "
+                    + "requested calculation, but " + miles + " was provided.\n\n");
+            throw ex;
+        }
+        
+        Application.log.debug("All data for calculation was provided.\n\n"
+                + "Performing calculation...\n");
+        double perMileValue = value / miles;
+        Application.log.exit(Math.class.getName(), "PerMileBreakdown", perMileValue);
+        return perMileValue;
     }
     //</editor-fold>
 

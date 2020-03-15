@@ -61,6 +61,7 @@ public class Application {
     
     public static final String NAME = "Northwind";
     public static final String TITLE = "Northwind Traders Complete Accounting";
+    public static final String EDITION = "Basic Edition";
     public static final String VENDOR = "PekinSOFT Systems";
     public static final String VENDOR_WEB = "https://www.pekinsoft.com";
     public static final String VENDOR_PHONE = "(309) 989-0672";
@@ -148,14 +149,12 @@ public class Application {
         int maj = Integer.valueOf(props.getProperty("app.major", "0"));
         
         log.debug("Calculating the version of the application.");
-        if ( DEBUGGING == true ) { 
+        if ( DEBUGGING ) { 
             if ( bui == 0 ) {
                 bui = 1583;
             } else {
-                System.out.println("Current System Time in Milliseconds: " +
-                        System.currentTimeMillis());
                 bui++;
-//            }
+            }
 
             if ( bui > 9999 ) {
                 bui = 0;
@@ -183,7 +182,7 @@ public class Application {
     }
     
     //<editor-fold defaultstate="collapsed" desc="Constructor(s)">
-    private Application () {
+    private Application() {
         /* Static class...cannot be instantiated. */
     }
     //</editor-fold>
