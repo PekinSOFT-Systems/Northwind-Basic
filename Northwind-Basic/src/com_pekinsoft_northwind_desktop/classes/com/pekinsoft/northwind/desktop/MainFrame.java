@@ -104,6 +104,7 @@ public class MainFrame extends javax.swing.JFrame {
         jMenuBar1 = new javax.swing.JMenuBar();
         FileMenu = new javax.swing.JMenu();
         NewMenu = new javax.swing.JMenu();
+        NewLoadMenuItem = new javax.swing.JMenuItem();
         NewCustomerMenuItem = new javax.swing.JMenuItem();
         jSeparator7 = new javax.swing.JPopupMenu.Separator();
         ExitMenuItem = new javax.swing.JMenuItem();
@@ -193,6 +194,17 @@ public class MainFrame extends javax.swing.JFrame {
         FileMenu.setText("File");
 
         NewMenu.setText("New");
+
+        NewLoadMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F5, 0));
+        NewLoadMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pekinsoft/northwind/desktop/graphics/x16/Delivery.png"))); // NOI18N
+        NewLoadMenuItem.setMnemonic('L');
+        NewLoadMenuItem.setText("Load...");
+        NewLoadMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                NewLoadMenuItem_Clicked(evt);
+            }
+        });
+        NewMenu.add(NewLoadMenuItem);
 
         NewCustomerMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_F12, 0));
         NewCustomerMenuItem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pekinsoft/northwind/desktop/graphics/x16/users.png"))); // NOI18N
@@ -286,6 +298,20 @@ public class MainFrame extends javax.swing.JFrame {
                 + "_Clicked");
     }//GEN-LAST:event_NewCustomerMenuItem_Clicked
 
+    private void NewLoadMenuItem_Clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_NewLoadMenuItem_Clicked
+        Application.log.enter(MainFrame.class.getName(), "NewLoadMenuItem"
+                + "_Clicked", evt);
+        Application.log.debug("Creating an instance of the LoadEntryDialog...");
+        LoadEntryDialog dlg = new LoadEntryDialog();
+        Application.log.debug("Adding the new LoadEntryDialog to the "
+                + "MainDesktop for display...");
+        this.MainDesktop.add(dlg);
+        Application.log.debug("Packing and showing the LoadEntryDialog...");
+        dlg.pack();
+        dlg.setVisible(true);
+        Application.log.exit(MainFrame.class.getName(), "NewLoadMenuItem_Clicked");
+    }//GEN-LAST:event_NewLoadMenuItem_Clicked
+
     /**
      * @param args the command line arguments
      */
@@ -334,6 +360,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenu FileMenu;
     private javax.swing.JDesktopPane MainDesktop;
     private javax.swing.JMenuItem NewCustomerMenuItem;
+    private javax.swing.JMenuItem NewLoadMenuItem;
     private javax.swing.JMenu NewMenu;
     private javax.swing.JLabel ProfitPerMileLabel;
     private javax.swing.JLabel RevenuePerMileLabel;
