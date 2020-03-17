@@ -297,7 +297,8 @@ public class Logger {
      * @param cls       The class in which the error happened.
      * @param method    The method in which the error happened.
      */
-    public void critical(Exception ex, String pkg, String cls, String method) {
+    public void critical(Exception ex, String pkg, String cls, String method,
+            String edition, String version, long build) {
         StringBuilder src = new StringBuilder();
         String rule = "-".repeat(80);
         
@@ -308,7 +309,7 @@ public class Logger {
         src.append("Error Location: ");
         src.append(pkg);
         src.append(".");
-        src.append(cls);
+        src.append(cls.substring(cls.lastIndexOf(".")+1));
         src.append(".");
         src.append(method);
         src.append("\n\n");
@@ -329,10 +330,20 @@ public class Logger {
         
         src.append(rule);
         src.append("\n\n");
+        src.append(" ".repeat(21));
+        src.append("N O R T H W I N D   I N F O R M A T I O N");
+        src.append("\n\n");
+        src.append("Edition...............");
+        src.append(edition);
+        src.append("\nVersion...............");
+        src.append(version);
+        src.append("\nBuild.................");
+        src.append(build);
+        src.append("\n\n");
         src.append(" ".repeat(24));
         src.append("S Y S T E M   I N F O R M A T I O N");
         src.append("\n\n");
-        src.append("OS..................");
+        src.append("OS.................");
         src.append(System.getProperty("os.name"));
         src.append("\nOS Version.........");
         src.append(System.getProperty("os.version"));
@@ -386,8 +397,9 @@ public class Logger {
 //        if ( this.level != OFF ) {
             // We're good to log the message to the log file.
             try {
-                this.err = new FileWriter(ERR_PATH + cls + "_" + timeStamp + 
-                                          ".err");
+                this.err = new FileWriter(ERR_PATH + 
+                        cls.substring(cls.lastIndexOf(".") + 1) + "_" + 
+                        "class_" + timeStamp + ".err");
         
 //                err.write(MSG_HDR);
                 err.write(src.toString());
