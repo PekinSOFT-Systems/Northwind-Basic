@@ -293,6 +293,11 @@ public class LoadEntryDialog extends javax.swing.JInternalFrame {
 
         btnAddStop.setIcon(new javax.swing.ImageIcon(getClass().getResource("/com/pekinsoft/northwind/desktop/graphics/x16/add.png"))); // NOI18N
         btnAddStop.setText("Add Stop...");
+        btnAddStop.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                AddStop_Clicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlStopsLayout = new javax.swing.GroupLayout(pnlStops);
         pnlStops.setLayout(pnlStopsLayout);
@@ -579,6 +584,20 @@ public class LoadEntryDialog extends javax.swing.JInternalFrame {
     private void SaveButton_Clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SaveButton_Clicked
         // TODO add your handling code here:
     }//GEN-LAST:event_SaveButton_Clicked
+
+    private void AddStop_Clicked(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_AddStop_Clicked
+        Application.log.enter(StopEntryDialog.class.getName(), "AddStop_Clicked",
+                evt);
+        Application.log.debug("Creating an instance of the StopEntryDialog...");
+        StopEntryDialog dlg = new StopEntryDialog(null, true);
+        Application.log.debug("Packing and showing the StopEntryDialog...");
+        dlg.pack();
+        dlg.setVisible(true);
+        Application.log.debug("Need to implement getting the data from the "
+                + "StopEntryDialog and into the table on this dialog.");
+        
+        Application.log.exit(StopEntryDialog.class.getName(), "AddStop_Clicked");
+    }//GEN-LAST:event_AddStop_Clicked
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable StopsTable;
