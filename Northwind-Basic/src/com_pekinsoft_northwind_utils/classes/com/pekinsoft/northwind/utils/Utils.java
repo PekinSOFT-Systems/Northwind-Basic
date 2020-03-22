@@ -34,6 +34,8 @@
 
 package com.pekinsoft.northwind.utils;
 
+import java.awt.Dimension;
+import java.awt.Point;
 import java.io.File;
 import java.net.URISyntaxException;
 
@@ -133,4 +135,21 @@ public class Utils {
         return "";
     }
     //</editor-fold>
+    
+    /**
+     *  Calculates central position of the window within its container.
+     * 
+     * @param container Dimensions of parent container where window will be located.
+     * @param window Dimensions of child window which will be displayed within its parent container.
+     * @return Location of top left corner of window to be displayed in the center of its parent container.
+     */
+    public static Point getCenterPoint(Dimension container, Dimension window) {
+        int x = container.width / 2;
+        int y = container.height / 2;
+        x = x - window.width / 2;
+        y = y - window.height / 2;
+        x = x < 0 ? 0 : x;
+        y = y < 0 ? 0 : y;
+        return new Point(x, y);
+    }
 }

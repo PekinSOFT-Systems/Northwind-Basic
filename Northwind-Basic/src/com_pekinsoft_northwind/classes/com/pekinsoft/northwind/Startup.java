@@ -34,6 +34,7 @@
 
 package com.pekinsoft.northwind;
 
+import com.pekinsoft.northwind.basic.ModulesManager;
 import com.pekinsoft.northwind.accounting.exceptions.InvalidAccountingDataException;
 import com.pekinsoft.northwind.accounting.Math;
 import com.pekinsoft.northwind.basic.Application;
@@ -101,6 +102,9 @@ public class Startup {
         } catch (InvalidAccountingDataException ex) {
             Application.log.handledError(ex, "Caught the error...");
         }
+        
+        // Load all custom modules extending Northwind basic functionality
+        ModulesManager.getDefault().loadModules();
         
         Application.log.config("Showing the MainFrame window.");
         MainFrame.main(args);
