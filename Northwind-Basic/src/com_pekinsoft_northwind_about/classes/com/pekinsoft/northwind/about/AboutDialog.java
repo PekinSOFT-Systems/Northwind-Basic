@@ -19,7 +19,7 @@ package com.pekinsoft.northwind.about;
 /**
  * Dialog displaying basic information about the Northwind Traders application
  *
- * @author Jiří Kovalský
+ * @author Jiří Kovalský &lt;jiri dot kovalsky at centrum dot cz&gt;
  */
 public class AboutDialog extends javax.swing.JInternalFrame {
 

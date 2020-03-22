@@ -29,6 +29,8 @@
  *  WHEN          BY                  REASON
  *  ------------  ------------------- ------------------------------------------
  *  Mar 8, 2020  Sean Carrick        Initial creation.
+ *  Mar 21, 2020 Jiří Kovalský       Added the `Module` and `ModuleManager`
+ *                                   classes.
  * *****************************************************************************
  */
 

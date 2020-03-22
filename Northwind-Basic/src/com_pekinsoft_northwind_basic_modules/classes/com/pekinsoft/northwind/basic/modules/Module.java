@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.pekinsoft.northwind.basic;
+package com.pekinsoft.northwind.basic.modules;
 
+import com.pekinsoft.northwind.basic.Application;
 import java.io.File;
 import java.io.InputStream;
 import java.lang.reflect.Constructor;
@@ -30,7 +31,7 @@ import org.w3c.dom.Document;
 /**
  * Class representing an additional Northwind Traders module.
  *
- * @author Jiří Kovalský
+ * @author Jiří Kovalský &lt;jiri dot kovalsky at centrum dot cz&gt;
  */
 public class Module {
 
@@ -116,5 +117,15 @@ public class Module {
             }
         }
         return null;
+    }
+    
+    /**
+     * Provides a {@code String} representation of the class.
+     * 
+     * @return 
+     */
+    @Override
+    public String toString() {
+        return this.name + "[ v. " + version + " ]";
     }
 }

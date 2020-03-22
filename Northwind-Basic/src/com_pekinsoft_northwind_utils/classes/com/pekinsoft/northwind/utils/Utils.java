@@ -29,6 +29,10 @@
  *  WHEN          BY                  REASON
  *  ------------  ------------------- ------------------------------------------
  *  Mar 8, 2020  Sean Carrick        Initial creation.
+ *  Mar 21, 2020 Jiri Kovalsky       Added the getCenterPoint function.
+ *  Mar 21, 2020 Sean Carrick        Moved getCenterPoint function into code 
+ *                                   fold for `public static methods and 
+ *                                   functions`.
  * *****************************************************************************
  */
 
@@ -134,14 +138,21 @@ public class Utils {
 
         return "";
     }
-    //</editor-fold>
     
     /**
      *  Calculates central position of the window within its container.
      * 
-     * @param container Dimensions of parent container where window will be located.
-     * @param window Dimensions of child window which will be displayed within its parent container.
-     * @return Location of top left corner of window to be displayed in the center of its parent container.
+     * <dl>
+     *  <dt>Contributed By</dt>
+     *  <dd>Jiří Kovalský &lt;jiri dot kovalsky at centrum dot cz&gt;</dd>
+     * </dl>
+     * 
+     * @param container Dimensions of parent container where window will be 
+     *                  located.
+     * @param window Dimensions of child window which will be displayed within 
+     *               its parent container.
+     * @return Location of top left corner of window to be displayed in the 
+     *         center of its parent container.
      */
     public static Point getCenterPoint(Dimension container, Dimension window) {
         int x = container.width / 2;
@@ -152,4 +163,5 @@ public class Utils {
         y = y < 0 ? 0 : y;
         return new Point(x, y);
     }
+    //</editor-fold>
 }

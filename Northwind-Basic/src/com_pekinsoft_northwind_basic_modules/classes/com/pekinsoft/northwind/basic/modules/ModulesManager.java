@@ -14,8 +14,9 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.pekinsoft.northwind.basic;
+package com.pekinsoft.northwind.basic.modules;
 
+import com.pekinsoft.northwind.basic.Application;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -23,7 +24,7 @@ import java.util.Iterator;
 /**
  * Singleton for managing repository of additional Northwind Traders modules
  *
- * @author Jiří Kovalský
+ * @author Jiří Kovalský &lt;jiri dot kovalsky at centrum dot cz&gt;
  */
 public class ModulesManager {
 

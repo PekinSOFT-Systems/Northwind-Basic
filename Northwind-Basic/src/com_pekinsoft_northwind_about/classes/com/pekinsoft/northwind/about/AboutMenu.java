@@ -26,7 +26,7 @@ import javax.swing.JMenuItem;
 /**
  * Class providing menu for the About module.
  *
- * @author Jiří Kovalský
+ * @author Jiří Kovalský &lt;jiri dot kovalsky at centrum dot cz&gt;
  */
 public class AboutMenu implements MenuProvider {
 

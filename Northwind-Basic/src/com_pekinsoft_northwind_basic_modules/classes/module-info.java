@@ -19,8 +19,8 @@
  *  Project    :   Northwind-Basic
  *  Class      :   module-info.java
  *  Author     :   Sean Carrick
- *  Created    :   Mar 11, 2020 @ 5:33:46 PM
- *  Modified   :   Mar 11, 2020
+ *  Created    :   Mar 21, 2020 @ 8:43:45 PM
+ *  Modified   :   Mar 21, 2020
  *  
  *  Purpose:
  *  
@@ -28,15 +28,13 @@
  *  
  *  WHEN          BY                  REASON
  *  ------------  ------------------- ------------------------------------------
- *  Mar 11, 2020  Sean Carrick        Initial creation.
+ *  Mar 21, 2020  Sean Carrick        Initial creation.
  * *****************************************************************************
  */
 
-module com_pekinsoft_northwind_desktop {
-    requires java.desktop;
-    requires java.logging;
+module com_pekinsoft_northwind_basic_modules {
+    requires java.xml;
     requires com_pekinsoft_northwind_basic;
-    requires com_pekinsoft_northwind_basic_modules;
     
-    exports com.pekinsoft.northwind.desktop;
+    exports com.pekinsoft.northwind.basic.modules;
 }

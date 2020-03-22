@@ -34,7 +34,7 @@
 
 package com.pekinsoft.northwind;
 
-import com.pekinsoft.northwind.basic.ModulesManager;
+import com.pekinsoft.northwind.basic.modules.ModulesManager;
 import com.pekinsoft.northwind.accounting.exceptions.InvalidAccountingDataException;
 import com.pekinsoft.northwind.accounting.Math;
 import com.pekinsoft.northwind.basic.Application;
