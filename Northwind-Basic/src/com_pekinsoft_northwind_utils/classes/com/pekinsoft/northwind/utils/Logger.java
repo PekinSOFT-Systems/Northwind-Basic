@@ -29,6 +29,9 @@
  *  WHEN          BY                  REASON
  *  ------------  ------------------- ------------------------------------------
  *  Mar 8, 2020  Sean Carrick        Initial creation.
+ *  Mar 21, 2020 Sean Carrick        Added the parameter `modules` to the 
+ *                                   `critical` function, so that installed
+ *                                   modules may be added to the error log.
  * *****************************************************************************
  */
 
@@ -39,7 +42,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -284,7 +286,8 @@ public class Logger {
     
     /**
      * Logs a system critical error to the log file just before the application
-     * exits.This should only be used for unrecoverable errors in the program.All other errors should be logged through the `error` method.<p>
+     * exits.This should only be used for unrecoverable errors in the program.
+     * All other errors should be logged through the `error` method.<p>
      * The `extraData` parameter should contain information pertinent to the
      * user within the context of your application. The `error` logging method
      * places system and Java information into the message by default. All of
@@ -296,9 +299,15 @@ public class Logger {
      * @param pkg       The package in which the error happened.
      * @param cls       The class in which the error happened.
      * @param method    The method in which the error happened.
+     * @param edition   The Northwind Traders Edition running (i.e., Basic,
+     *                  Corporate, or Enterprise).
+     * @param version   The string representation of the application version.
+     * @param build     The build of the running version.
+     * @param modules   An array of {@code String}s of the installed modules
+     *                  names.
      */
     public void critical(Exception ex, String pkg, String cls, String method,
-            String edition, String version, long build) {
+            String edition, String version, long build, Object[] modules) {
         StringBuilder src = new StringBuilder();
         String rule = "-".repeat(80);
         
@@ -339,6 +348,13 @@ public class Logger {
         src.append(version);
         src.append("\nBuild.................");
         src.append(build);
+        src.append("\nInstalled Modules:");
+        
+        for (Object module : modules) {
+            src.append("\n\t");
+            src.append(module.toString());
+        }
+        
         src.append("\n\n");
         src.append(" ".repeat(24));
         src.append("S Y S T E M   I N F O R M A T I O N");
